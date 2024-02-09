@@ -154,7 +154,7 @@ Options available for customizing output include:
 | **error**   | Include errors in the output (note that this implies that errors executing code will not halt processing of the document).                                                                  |
 | **include** | Catch all for preventing any output (code or results) from being included (e.g. include: false suppresses all output from the code block).                                                  |
 
-You can see a more complete example on how to use r and python code [here](https://github.com/IPESE/college_blog/blob/main/posts/test.qmd)
+You can see a more complete example on how to use r and python code [here](https://ipese-web.epfl.ch/college-blog/posts/test.html)
 
 ## Deploy the changes
 

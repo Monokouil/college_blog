@@ -12,24 +12,6 @@ toc-location: left
 toc-expand: 3
 image : ../resources/images/sample.jpeg
 ---
-# Main title
-## Secondary title
-### Tertiary title
-
-[Link to a website](https://www.google.com)
-
-1.  Main point
-    i.  secondary point
-    i.  secondary point
-1. Second point
-    a.  secondary point
-    a.  secondary point
-
-| Aligned to the left | Centered col | Align to right |
-|:--------------------|:------------:|---------------:|
-| Content             |   Content    |        Content |
-| Content             |   Content    |        Content |
-
 
 ## Simple chart
 #### Create a python virtual environment to download python packages you'll use in your script

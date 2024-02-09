@@ -1,0 +1,44 @@
+---
+title: Other post
+author: João Silva
+date: '2023-10-25'
+description: This is an unlisted post
+comments:
+  hypothesis: true
+toc: true
+toc-location: left
+toc-expand: 3
+hidden: true
+---
+
+**Install quarto extension and connect with zotero API**
+
+1.  If not yet installed, install VS Code as this is the tool we are going to use for most projects
+2.  In VS Code install the quarto extension
+3.  Go to zotero.org and log in your account
+4.  In your account go to settings and then Feeds/API
+5.  Here you can create a new API key with a name of your choice
+6.  Copy the new API and save it because you won't be able to access it again once you leave the page
+7.  Access your settings (⌘,) and look for zotero in the search bar
+8.  In the Zotero: Library choose web and you'll be prompted to add your API key
+9.  In Group Libraries click on Add Item and write the group name and ok
+10. You can now edit in visual mode by clicking the 3 dots on the top right or ⌘⇧P and enter Visual Mode
+    -   By clicking in insert and Citation, you can see a list of citations available
+    -   When adding a citation it will automatically add the information on a bib file, the reference to you yaml header and the citation where your text cursor is located
+
+**Other extensions you might add:**
+
+-   `Live Share` by Microsoft allows you to create a link and allow collaborative editing with others with whom you share it with.
+    -   Other users can open the link and use wbe version or open in VSCode, connect their account or simply choose a user name.
+    -   After that, you (the person who created the link) need to accept the new user as an Edit or a read-only user.
+-   `Draw.io integration` by Henning Dieterichs to edit drawio files
+    -   Simply create a new `.drawio` file or open an existing one and it will open an interface that allows you to edit the diagram.
+-   `Edit csv` by janisdd to edit csv files
+    -   Create or open a `.csv` and click on "Edit csv" on the top right.
+-   `Excel Viewer` by GrapeCity to edit xlsx files
+    -   Open an `.xlsx` and you'll be able to edit your content in a simplified graphical interface
+-   `vscode-pdf` by tomoki1207 to visualise pdf in vs code.
+    -   This allows you to view pdf files in VSCode, which is impossible otherwise.
+-   `vscode-pydata-viewer` by Percy to view pickl files
+    -   This uses your pandas installation to display data and it needs to by version < 2.0
+-   `GPT` by Silas Nevstad to use GPT in vs code *(need for an API key)*

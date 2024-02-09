@@ -32,9 +32,9 @@ image : ../resources/images/sample.jpeg
 
 
 ## Simple chart
-
+#### Create a python virtual environment to download python packages you'll use in your script
 ```{r create-venv}
-#| echo: false
+#| echo: true
 #| output: false
 
 if (!requireNamespace("reticulate", quietly = TRUE)) {
@@ -49,8 +49,10 @@ use_virtualenv(venv_path)
 py_install("matplotlib")
 ```
 
+#### Use python and the package matplotlib ti create a simple chart
 ```{python}
-#| echo: false
+#| echo: true
+#| output: true
 import matplotlib.pyplot as plt
 
 # Data

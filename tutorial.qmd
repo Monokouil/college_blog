@@ -134,7 +134,9 @@ You can then add multiple types of data like :
 You can also run or display code chunks like this:
 
 ```{r, echo=T, eval=F}
-    ```{r, echo=T}
+    ```{r}
+    #| echo: false
+    #| output: false
     if(!require('reticulate'))
         install.packages("reticulate")
     ```
@@ -152,7 +154,7 @@ Options available for customizing output include:
 | **error**   | Include errors in the output (note that this implies that errors executing code will not halt processing of the document).                                                                  |
 | **include** | Catch all for preventing any output (code or results) from being included (e.g. include: false suppresses all output from the code block).                                                  |
 
-*Also, your chunks with echo=T, if the code-copy is true in this file, will have a copy to clipboard button.*
+You can see a more complete example on how to use r and python code [here](https://github.com/IPESE/college_blog/blob/main/posts/test.qmd)
 
 ## Deploy the changes
 

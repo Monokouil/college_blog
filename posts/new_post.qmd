@@ -1,7 +1,7 @@
 ---
 title: Create a new blog post
 author: João Silva
-date: '2023-11-29'
+date: '2024-02-09'
 categories:
   - Tutorial
 description: Tutorial how to create a new post on a quarto blog
@@ -20,31 +20,29 @@ image : ../resources/images/new_post.png
 
 This document presents how to publish blog post in the [College blog](https://github.com/IPESE/college_blog).
 
-To add posts to the Quarto blog, simply navigate to the "posts" menu. Our blog articles are written in Quarto, a format similar to Markdown. This means you can easily format your posts using simple syntax.
+Our blog articles are written in Quarto, a format similar to Markdown. This means you can easily format your posts using simple syntax.
 
 One exciting feature of our blog platform is the ability to include R or Python code chunks directly in your posts. This allows you to showcase data analysis, visualizations, or any other code-related content seamlessly within your articles.
 
 ## Setup development environment
 
-You can conveniently edit your posts directly on the [GitHub IDE](https://github.com/IPESE/college_blog/new/main/posts). Simply add a unique name to your file and start writing away.
+You can conveniently edit your posts directly on the [GitHub IDE](https://github.com/IPESE/college_blog/new/main/posts). Simply add a unique name to your file and the extension `.qmd` and start writing away.
 
-You can conveniently edit your posts directly on the GitHub IDE. Simply add a unique name to your file and the extension `.qmd` and start writing away.
-
-(And bad news: ChatGPT is not the best tool to ask for markdown code to copy/paste. *But you can always use it to help you with the rules*)
+(And bad news: ChatGPT is not the best tool to ask for markdown code to copy/paste. *But you can always use it to help you understand the syntax*)
 
 With this setup, you can start writing your blog posts right away. There's no need to spend time [configuring software or tools](new_post2.html).
 
-Keep in mind that you won't be able to preview your posts before deployment. However, you can trust in the robustness of the GitHub platform for managing your content.
+Keep in mind that by using the Github IDE you won't be able to preview your posts before deployment. However, we will manage the deployment and error handling automatically.
 
-For simple markdown (without python or R code for example, you can test it in some online tools like [Dillinger.io](https://dillinger.io/)), 
+For simple markdown (without python or R code for example) you can test it in some online tools like [Dillinger.io](https://dillinger.io/).
 
 ## Before writing
 
 In the beginning of your document, you should add some settings for how your post will be displayed. 
 
-You might change the title, author, date, categories and description that are self-explanatory. Other options are toc for example that allows you to control how and if the table of contents is displayed or comments to choose the framework that will manage comments in your post.
+You might change the title, author, date, categories and description that are self-explanatory. FYI, other options are `toc` that allows you to control how and if the table of contents is displayed or comments to choose the framework that will manage comments in your post.
 
-This is a sample configuration that you can copy to start your post:
+This is a sample configuration that you can copy and adapt to start your post:
 
 ```{markdown, eval=F, echo=T}
 ---
@@ -62,54 +60,75 @@ toc-expand: 3
 image : ../resources/images/sample.png
 ---
 ```
+You can also change the image that appears on the listing. 
+
+For that, replace "../resources/images/sample.png" by an url of a picture *(urls ending with .jpg or .png for example)*
 
 ## Write in Markdown
 
 You can add titles by starting the line with \# like this:
 
-```         
+```{markdown, eval=F, echo=T}       
 # Main title
 ## Secondary title
 ### Tertiary title
 ```
 
-You can then add multiple types of data like
+You can then add multiple types of data like :
 
 1.  Text
 
-2.  Link to a website
+2.  [Link to a website](https://www.google.com)
+    ```{markdown, eval=F, echo=T}
+        [Link to a website](https://www.google.com)
+    ```
 
-    -   `[link to a website](https://www.google.com)`
-    -   [link to a website](https://www.google.com)
+4.  **Bold text**
+    ```{markdown, eval=F, echo=T}
+        **bold**
+    ```
 
-4.  Bold text
+5.  *Italic text*
+    ```{markdown, eval=F, echo=T}
+        *italic*
+    ```
 
-    -   `**bold**`
-    -   **bold**
-
-5.  Italic text
-
-    -   `*italic*`
-    -   *italic*
-
-6.  Bold and italic text
-
-    -   `***bold italic***`
-    -   ***bold italic***
+6.  ***Bold and italic text***
+    ```{markdown, eval=F, echo=T}
+        ***bold italic***
+    ```
 
 7.  Unordered list *managed with `-` and tabs *:
+
+    ```{markdown, eval=F, echo=T}
+        -   Main point
+            -   secondary point
+    ```
 
     -   Main point
         -   secondary point
 
-8.  Ordered list *managed with `1.` or `i.` and tabs *:
+8.  Ordered list *managed with `1.`, `a.` or `i.` and tabs *:
+
+    ```{markdown, eval=F, echo=T}
+        1.  Main point
+            i.  secondary point
+            i.  secondary point
+        1. Second point
+            a.  secondary point
+            a.  secondary point
+    ```
 
     1.  Main point
-        i)  secondary point
+        i.  secondary point
+        i.  secondary point
+    1. Second point
+        a.  secondary point
+        a.  secondary point
 
 9.  Tables are also possible:
 
-    ```
+    ```{markdown, eval=F, echo=T}
     | Aligned to the left | Centered col | Align to right |
     |:--------------------|:------------:|---------------:|
     | Content             |   Content    |        Content |

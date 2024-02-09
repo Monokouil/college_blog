@@ -173,3 +173,9 @@ Options available for customizing output include:
 4. Click on "Commit changes"
 5. We have put in place a process that ignores posts where an error is encountered. In the github menu you can click on "Actions" to check the status of the deployment created by your post.
 6. Our IT-service will go through any post with an error, fix it and explain what was done to correct it in a section at the bottom of the post.
+
+# Edit a post
+
+1. To edit your post, go to the projects' posts [github page](https://github.com/IPESE/college_blog/tree/main/posts) and click on the post you want to edit.
+2. Click on the pencil icon on the top right of the code section.
+3. This window should now look familiar. Edit and deploy as described previously!

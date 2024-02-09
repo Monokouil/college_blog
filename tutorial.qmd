@@ -1,19 +1,8 @@
 ---
-title: Create a new blog post
-author: João Silva
-date: '2024-02-09'
-categories:
-  - Tutorial
-description: Tutorial how to create a new post on a quarto blog
-comments:
-  hypothesis: true
+title: Tutorial
 toc: true
 toc-location: left
 toc-expand: 3
-output:
-  html_document:
-    df-print: paged
-image : ../resources/images/new_post.png
 ---
 
 # Create a new blog post
@@ -26,11 +15,11 @@ One exciting feature of our blog platform is the ability to include R or Python 
 
 ## Setup development environment
 
-You can conveniently edit your posts directly on the [GitHub IDE](https://github.com/IPESE/college_blog/new/main/posts). Simply add a unique name to your file and the extension `.qmd` and start writing away.
+You can conveniently edit your posts directly on the [GitHub IDE](https://github.com/IPESE/college_blog/new/main/posts) where you'll need to sign in or sign up to github. Simply add a unique name to your file and the extension `.qmd` and start writing away.
 
 (And bad news: ChatGPT is not the best tool to ask for markdown code to copy/paste. *But you can always use it to help you understand the syntax*)
 
-With this setup, you can start writing your blog posts right away. There's no need to spend time [configuring software or tools](new_post2.html).
+With this setup, you can start writing your blog posts right away. There's no need to spend time [configuring software or tools](environment_installation.html).
 
 Keep in mind that by using the Github IDE you won't be able to preview your posts before deployment. However, we will manage the deployment and error handling automatically.
 
@@ -48,7 +37,7 @@ This is a sample configuration that you can copy and adapt to start your post:
 ---
 title: Title of your blog
 author: Your name
-date: 2024-12-24
+date: 2012-12-12
 categories:
   - Your Category
 description: Description of your post that will appear in the listing
@@ -57,7 +46,7 @@ comments:
 toc: true
 toc-location: left
 toc-expand: 3
-image : ../resources/images/sample.png
+image : ../resources/images/sample.jpeg
 ---
 ```
 You can also change the image that appears on the listing. 

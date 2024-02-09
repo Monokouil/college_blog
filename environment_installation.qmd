@@ -8,7 +8,7 @@ comments:
 toc: true
 toc-location: left
 toc-expand: 3
-hidden: true
+draft: true
 ---
 ### 1. Installation
 

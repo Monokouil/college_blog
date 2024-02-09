@@ -1,3 +1,3 @@
 #!/bin/bash
 export HOME=/root
-quarto render
+python3 ./resources/scripts/deploy.py

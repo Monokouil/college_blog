@@ -7,7 +7,7 @@ website:
     logo: "resources/images/logo.png"
     left:
       - index.qmd
-      - about.qmd
+      - tutorial.qmd
 format:
   html:
     theme: cosmo

@@ -30,48 +30,6 @@ image : ../resources/images/sample.jpeg
 | Content             |   Content    |        Content |
 | Content             |   Content    |        Content |
 
-
-## Simple chart
-
-```{r create-venv}
-#| echo: false
-#| output: false
-
-if (!requireNamespace("reticulate", quietly = TRUE)) {
-  install.packages("reticulate")
-}
-library(reticulate)
-
-# Create a virtual environment
-venv_path <- "../venv"  # Specify the path where you want to create the venv
-virtualenv_create(venv_path)
-use_virtualenv(venv_path)
-py_install("matplotlib")
-```
-
 ```{python}
-#| echo: false
-import matplotlib.pyplot as plt
-
-# Data
-x = [1, 2, 3, 4, 5]
-y = [2, 3, 5, 7, 11]
-
-# Plot
-plt.plot(x, y, marker='o')
-
-# Add titles and labels
-plt.title('Example Line Chart')
-plt.xlabel('X-axis label')
-plt.ylabel('Y-axis label')
-
-# Display grid
-plt.grid(True)
-
-# Save the plot as an image file
-plt.savefig('line_chart.png')
-
-# Show the plot
-plt.show()
-
+from sdf import dsf
 ```

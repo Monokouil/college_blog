@@ -32,7 +32,7 @@ You can conveniently edit your posts directly on the GitHub IDE. Simply add a un
 
 (And bad news: ChatGPT is not the best tool to ask for markdown code to copy/paste. *But you can always use it to help you with the rules*)
 
-With this setup, you can start writing your blog posts right away. There's no need to spend time [configuring software or tools](new_post2.htm).
+With this setup, you can start writing your blog posts right away. There's no need to spend time [configuring software or tools](new_post2.html).
 
 Keep in mind that you won't be able to preview your posts before deployment. However, you can trust in the robustness of the GitHub platform for managing your content.
 

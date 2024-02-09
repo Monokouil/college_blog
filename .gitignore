@@ -47,3 +47,7 @@ venv
 
 #drawio
 *.drawio.pdf
+*.pdf
+*.docx
+*.aux
+*.toc

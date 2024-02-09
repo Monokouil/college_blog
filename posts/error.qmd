@@ -30,6 +30,6 @@ image : ../resources/images/sample.jpeg
 | Content             |   Content    |        Content |
 | Content             |   Content    |        Content |
 
-```{python}
-error = 2/0
+```{r}
+library(adsf)
 ```

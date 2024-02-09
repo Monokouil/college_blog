@@ -1,0 +1,31 @@
+---
+title: Something interesting
+author: João Silva
+date: 2024-02-09
+categories:
+  - Test
+description: Post about something that is intersting
+comments:
+  hypothesis: true
+toc: true
+toc-location: left
+toc-expand: 3
+image : https://ih1.redbubble.net/image.760710727.6783/flat,750x,075,f-pad,750x1000,f8f8f8.jpg
+---
+# Main title
+## Secondary title
+### Tertiary title
+
+[Link to a website](https://www.google.com)
+
+1.  Main point
+    i.  secondary point
+    i.  secondary point
+1. Second point
+    a.  secondary point
+    a.  secondary point
+
+| Aligned to the left | Centered col | Align to right |
+|:--------------------|:------------:|---------------:|
+| Content             |   Content    |        Content |
+| Content             |   Content    |        Content |

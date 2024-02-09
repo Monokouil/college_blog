@@ -24,8 +24,8 @@ jobs:
 
     - name: Deploy
       run: |
-        sudo apt-get update && sudo apt-get install -y rsync
-        which ssh-agent || (sudo apt-get update && sudo apt-get install -y openssh-client)
+        apt-get update && apt-get install -y rsync
+        which ssh-agent || (apt-get update && apt-get install -y openssh-client)
         mkdir -p ~/.ssh
         eval $(ssh-agent -s)
         echo "${SSH_PRIVATE_KEY}" | ssh-add -

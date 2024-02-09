@@ -31,5 +31,5 @@ image : ../resources/images/sample.jpeg
 | Content             |   Content    |        Content |
 
 ```{python}
-from sdf import dsf
+error = 2/0
 ```

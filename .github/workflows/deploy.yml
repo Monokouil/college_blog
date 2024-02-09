@@ -20,7 +20,7 @@ jobs:
 
     - name: Prepare Quarto Project
       run: |
-        docker run -v ${{ github.workspace }}:/app -w /app -u root -e HOME=/app jcfdsilva/quarto_slim:latest -c quarto render
+        docker run -v ${{ github.workspace }}:/app -w /app -u root -e HOME=/app jcfdsilva/quarto_slim:latest -c printenv
 
     - name: Deploy
       run: |

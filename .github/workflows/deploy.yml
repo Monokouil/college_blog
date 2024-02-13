@@ -13,6 +13,7 @@ jobs:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
       SSH_USER_HOST_LOCATION: ${{ secrets.SSH_USER_HOST_LOCATION }}
+      GHP_IPESEIT: ${{secrets.GHP_IPESEIT}}
 
     steps:
     - name: Checkout Repository
@@ -20,6 +21,7 @@ jobs:
 
     - name: Prepare Quarto Project
       run: |
+        sed -i 's|ghp_ipeseit|${GHP_IPESEIT}|g' ./resources/scripts/github-members.js
         docker run -v ${{ github.workspace }}:/app -w /app -u root jcfdsilva/quarto_slim:latest -c ./resources/scripts/deploy.sh
 
     - name: Deploy

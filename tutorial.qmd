@@ -5,6 +5,10 @@ toc-location: left
 toc-expand: 3
 ---
 
+```{=html}
+<script src="resources/scripts/github-members.js" defer></script>
+```
+
 # Create a new blog post
 
 This document presents how to publish blog post in the [College blog](https://github.com/IPESE/college_blog).
@@ -15,7 +19,14 @@ One exciting feature of our blog platform is the ability to include R or Python 
 
 ## Setup development environment
 
-You can conveniently edit your posts directly on the [GitHub IDE](https://github.com/IPESE/college_blog/new/main/posts) where you'll need to sign in or sign up to github. Simply add a unique name to your file and the extension `.qmd` and start writing away.
+To be able to make changes to our blog you'll need to [create a GitHub account](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home) and give us your username through here:
+
+::: input-username
+:::
+
+You should now have an open invitation on your email account. Accept it and you'll then have the rights to edit the project.
+
+Now you can conveniently edit your posts directly on the [GitHub IDE](https://github.com/IPESE/college_blog/new/main/posts) where you'll need to be signed in to github. Simply add a unique name to your file and the extension `.qmd` and start writing away.
 
 (And bad news: ChatGPT is not the best tool to ask for markdown code to copy/paste. *But you can always use it to help you understand the syntax*)
 

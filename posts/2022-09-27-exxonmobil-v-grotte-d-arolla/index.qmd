@@ -1,0 +1,294 @@
+---
+title: ExxonMobil V. Grotte d'Arolla
+author: Dorsan Lepour and Joseph Loustau
+date: '2022-09-27'
+categories:
+  - Blog
+  - CO2 emissions
+description: Article description.
+toc: false
+image: humble.jpg
+codeMaxLines: 10
+codeLineNumbers: no
+comments:
+  hypothesis: true
+always_allow_html: yes
+bibliography : arolla.bib
+---
+
+```{r setup, include=F}
+if(!require('knitr'))
+  install.packages("knitr", dependencies = T, repos='http://cran.us.r-project.org')
+library(knitr)
+
+if(!require('dplyr'))
+  install.packages("dplyr", dependencies = T, repos='http://cran.us.r-project.org')
+library(dplyr)
+
+if(!require('plotly'))
+  install.packages("plotly", dependencies = T, repos='http://cran.us.r-project.org')
+library(plotly)
+
+if(!require('raster'))
+  install.packages("raster", dependencies = T, repos='http://cran.us.r-project.org')
+library(raster)
+
+if(!require('terra'))
+  install.packages("terra", dependencies = T, repos='http://cran.us.r-project.org')
+library(terra)
+
+if(!require('DT'))
+  install.packages("DT", dependencies = T, repos='http://cran.us.r-project.org')
+library(DT)
+
+if(!require('slideview'))
+  install.packages("slideview", dependencies = F, repos='http://cran.us.r-project.org')
+library(slideview)
+
+if(!require('jpeg'))
+  install.packages("jpeg", dependencies = F, repos='http://cran.us.r-project.org')
+library(jpeg)
+
+opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r donnees}
+# Données temporelles
+annee_depart <- 1971
+annee_fin <- 2016
+nb_annees <- annee_fin-annee_depart
+nb_jours <- nb_annees * 365 + round(nb_annees/4)
+
+# Fonte de glace
+enthalpie_fusion_eau <- 333.55*0.000277778 # [kWh/kg]
+
+fonte_theorique_exxon_1962 <- 10.3e6 # [t_glaciers]
+fonte_annoncee_exxon_1962 <- 7e6 # [t_glaciers]
+facteur_correction <- fonte_theorique_exxon_1962/fonte_annoncee_exxon_1962 # [-]
+glace_fondue_par_litre_essence_potentiel <- 10.05/(enthalpie_fusion_eau*facteur_correction) # [kg_glace/L_essence]
+
+data_ice <- read.csv("Zemp_etal_results_global.csv")
+first_Year <- which(data_ice$Year == annee_depart)
+last_Year <- which(data_ice$Year == annee_fin)
+data_ice <- data_ice %>% slice(first_Year:last_Year)
+data_ice <- data_ice %>% dplyr::select(1:3)
+total_ice_lost <- -1e9*sum(data_ice$INT_Gt) # [t_glaciers]
+
+
+# Production pétrole
+data_oil <- read.csv("world-oil-supply-and-demand-1971-2020.csv")
+last_Year <- which(data_oil$Year == 2016)
+data_oil <- data_oil %>% slice(1:last_Year)
+total_oil_production <- 1e6*sum(data_oil$Crude.oil.and.NGL.production) # [t_oil]
+
+barils_jour_2020 <- 89.9 # [Mbarrils/jour]
+barils_exxon_jour_2020 <- 4 # [Mbarrils/jour]
+barils_exxon_jour_1962 <- 0.6 # [Mbarrils/jour]
+
+total_co2_emitted <- 1e9*1127.9 # [t_co2]
+
+CO2_emis_par_litre_essence  <- 2.392 # [kg_CO2/L_essence]
+consommation_voiture <- 0.0618 # [L_essence/km]
+
+# Comparaison
+fonte_calc_jour <- total_ice_lost/nb_jours # [t_glaciers]
+fonte_calc_exxon_jour <- barils_exxon_jour_2020/barils_jour_2020*fonte_calc_jour # [t_glaciers]
+mass_aletsch <- 11  # [milliards t_glaciers]
+
+ratio_glace_fondue_CO2_emis = total_ice_lost/total_co2_emitted # [kg_glace/kg_CO2]
+glace_fondue_par_litre_essence_observee <- CO2_emis_par_litre_essence*ratio_glace_fondue_CO2_emis # [kg_glace/L_essence]
+glace_fondue_par_km <- glace_fondue_par_litre_essence_observee*consommation_voiture # [kg_glace/km_voiture]
+
+ratio_observation = glace_fondue_par_litre_essence_observee/glace_fondue_par_litre_essence_potentiel
+fonte_indirecte_exxon_1962 <- fonte_annoncee_exxon_1962*ratio_observation
+```
+
+
+# Contexte
+
+> This giant glacier has remained unmelted for centuries. Yet, the petroleum energy Humble supplies -- if converted into heat -- could melt it at the rate of 80 tons each second! [...]
+
+En 1962, la *Humble Oil and Refining CO.* - filiale de la *Standard Oil of New Jersey*, aujourd'hui devenue ExxonMobil - fait campagne autour de l'immense champ des possibles qu'ouvre le pétrole. La compagnie clame ainsi fièrement qu'elle fournit une quantité de pétrole qui, en terme de contenu énergétique, pourrait faire fondre quotidiennement 7 millions de tonnes de glacier, se vantaient-ils.
+
+Soixante années plus tard, que pouvons-nous finalement observer de la corrélation entre production de pétrole et perte de masse des glaciers ?
+
+```{r pub, fig.cap="Publicité de la Humble Oil and Refining Co., février 1962.", align="center", out.width="100%"}
+include_graphics("humble_1962.png")
+```
+
+
+# Production de pétrole vs perte de masse des glaciers
+
+::: {.panel-tabset}
+
+## Plot
+
+```{r}
+#| label: fig-oil
+#| fig-cap: Production de pétrole
+#| fig-align: center
+#| out-width: "100%"
+fig <- plot_ly(data_oil, x=data_oil$Year, y=data_oil$Crude.oil.and.NGL.production, type='scatter', mode='lines') %>%
+  layout(xaxis = list(title = "Année"),
+         yaxis = list(title = "[Mt/an]"))
+fig
+```
+
+## Table
+
+```{r}
+#| label: tbl-oil
+#| tbl-cap: Production de pétrole
+DT::datatable(data_oil, options=list(pagelength=10))
+```
+:::
+
+La production cumulée de pétrole sur la période allant de `r annee_depart` à `r annee_fin` fut de `r format(total_oil_production/1e9, scientific = F, digits = 2)` [Gt] [@WorldOilSupply].
+
+::: {.panel-tabset}
+
+## Plot
+
+```{r}
+#| label: fig-ice
+#| fig-cap: Variation de masse des glaciers
+#| fig-align: center
+#| out-width: "100%"
+fig <- plot_ly(data_ice, x=data_ice$Year, y=data_ice$INT_Gt, type='bar') %>%
+  layout(xaxis = list(title = "Année"),
+         yaxis = list(title = "[Gt/an]"))
+fig
+```
+
+## Table
+
+```{r}
+#| label: tbl-ice
+#| tbl-cap: Variation de masse des glaciers.
+DT::datatable(data_ice, options=list(pagelength=10))
+```
+
+:::
+
+Sur cette même période, la masse globable des glaciers dans le monde a diminué de `r format(total_ice_lost/1e9, scientific = F, digits = 2)` [Gt]. Tous les glaciers continentaux sont considérés dans cette étude, à l'exception de des calottes glaciaires du Groenland et de l'Antarctique. [@zempGlobalGlacierMass2019].
+
+Finalement, de 1971 à 2016, `r total_co2_emitted/1e9` [Gt]  de $CO_2$ ont été émises [@ritchieCOEmissions2024]. En comparant ce chiffre avec la masse de glaciers qui ont fondu sur la même période (`r format(total_ice_lost/1e9, scientific = F, digits = 2)` [Gt]), on obtient un ratio de `r round(ratio_glace_fondue_CO2_emis, 2)` [kg de glacier fondu / kg de $CO_2$ émis].
+
+
+# Contribution d'ExxonMobil
+
+La fonte des glaciers ces `r nb_annees` dernières années a représenté en moyenne **`r format(fonte_calc_jour/1e6, scientific = F, digits = 2)` millions de tonnes de glaciers fondues chaque jour**.
+
+Pour évaluer la part de responsabilité d'ExxonMobil, on peut directement utiliser leur part de marché dans la production journalière de barils de pétrole:
+
+* `r barils_jour_2020` millions de barils sont produits chaque jour dans le monde [@StatisticalReviewWorld2022].
+* `r barils_exxon_jour_2020` millions de barils sont produits chaque jour par ExxonMobil [@Investors2024].
+
+Cette part de marché de `r round(100*barils_exxon_jour_2020/barils_jour_2020, 2)`% suppose donc une contribution à la fonte des glaciers de **`r format(fonte_calc_exxon_jour/1e6, scientific = F, digits = 2)` millions de tonnes chaque jour**.
+
+_____
+
+Nous pouvons mettre en perspective cette valeur, bien supérieure aux 7 millions de tonnes de glaciers que Humble se vantait de pouvoir faire fondre (théoriquement, en terme d'énergie équivalente à leur production de pétrole) quotidiennement en 1962, année où cette réclame est parue.
+
+À l'époque, leur production était de 600'000 barils par jour, soit 95.4 millions de L de pétrole. En confrontant ce nombre à la fonte équivalente de glacier annoncée (7 [Mt/jour]), cela amène à une valeur de `r round(glace_fondue_par_litre_essence_potentiel, 2)` [kg de glace] fondus pour 1L de pétrole (soit une correction de +47% par rapport à l'enthalpie de fusion de l'eau de 333.55 [kJ/kg], ce qui s'explique aisément par le fait qu'un glacier n'est généralement pas à la température de 0°C).
+
+# Contribution d'un automobiliste
+
+Finalement, posons-nous la question de la contribution d'un automobiliste à la fonte des glaciers:
+
+* En Suisse, une voiture consomme en moyenne `r consommation_voiture` [L essence/km] [@ConsommationCarburantEmissions].
+* Un litre d'essence brûlée émet très exactement `r CO2_emis_par_litre_essence` [kg $CO_2$] ([ecoscore.be](https://ecoscore.be/en/info/ecoscore/co2)).
+* On peut donc calculer que:
+    * pour chaque litre d'essence consommée: `r round(ratio_glace_fondue_CO2_emis, 2)` $\times$ `r CO2_emis_par_litre_essence` =  `r round(glace_fondue_par_litre_essence_observee, 2)` [kg glace] vont fondre,
+    * soit `r round(glace_fondue_par_litre_essence_observee, 2)` $\times$ `r consommation_voiture` = `r round(glace_fondue_par_km, 2)` [kg glace] par kilomètre parcouru.
+
+Si par ailleurs cet automobiliste est valaisan, il est probablement au volant d'une Subaru impreza wrx sti turboBoost diesel-reprog, qui consomme nettement plus que 6 [L/100km], et contribue donc d'autant plus massivement à faire fondre le glacier d'Arolla... jusqu'à faire s'écrouler sa désormais regrettée grotte de glace.
+
+Ce chiffre est mise en perspective dans la @fig-transports avec d'autres moyens de transports.
+
+```{r}
+#| label: fig-transports
+#| fig-cap: Fonte des glaces par mode de transport. [@CalculerEmissionsCarbone; @VoitureElectriqueOu]
+library(plotly)
+
+glacier_co2 = 7.83  # [kg de glacier fondu / kg de CO2 émis]
+car_100km = 22  # kgCO2/100km
+ecar_100km = 89 * 100 /1000  # kgCO2/100km
+bus_100km = 2.9  # kgCO2/100km
+train_100km = 0.7  # kgCO2/100km
+ebike_100km = 0.14  # kgCO2/100km
+bike = 0.08  # kgCO2/100km
+plane_100km = 25.9  # kgCO2/100km short distance
+plane_long_100km = 15.2  # kgCO2/100km long distance
+
+df_fonte = data.frame(
+  `Avion (Court courrier)` = c(plane_100km * glacier_co2),
+  `Voiture (individuel)`= c(car_100km * glacier_co2),
+  `Avion (Long courrier)` = c(plane_long_100km * glacier_co2),
+  `Voiture électrique (individuel)` = c(ecar_100km * glacier_co2),
+  `Bus` = c(bus_100km * glacier_co2),
+  `Train` = c(train_100km * glacier_co2),
+  `Vélo électrique` = c(ebike_100km * glacier_co2),
+  `Vélo` = c(bike * glacier_co2),
+  check.names = F
+)
+df_fonte <- t(df_fonte)
+fig <- plot_ly(
+  y=rownames(df_fonte), x=df_fonte, type='bar',
+  orientation='h', hovertemplate='<b>%{y}</b><br>%{x:.2f} kg glaciers/100km<br>',
+  name='Glaciers melt', texttemplate='<i>%{x:.2f}</i>'
+)
+
+# Customize layout
+fig <- fig %>% layout(
+     xaxis = list(title='Fonte des glaces pour 100km parcourus [kg glaciers/100km]'),
+     yaxis=list(title='Mode de transport', categoryorder='array', categoryarray=rownames(df_fonte)),
+     template='plotly_white'
+ )
+
+fig
+```
+
+> A noter que les émissions ne concernent ici pas seulement la combustion des carburants mais également la construction des véhicules (fabrication, maintenance et fin de vie) et la production et distribution de carburant et d'électricité.
+
+# Conclusion
+
+En conclusion, on observe que si 1L d'essence permet théoriquement de faire fondre `r round(glace_fondue_par_litre_essence_potentiel, 2)` [kg de glace] (en terme d'énergie contenue, et donc de pouvoir calorifique), on constate surtout que chaque litre d'essence consommée à travers le monde ces dernières décennies a effectivement engendré directement la fonte de `r round(glace_fondue_par_litre_essence_observee, 2)` [kg de glace], en raison des particules de $CO_2$ émises et de l'effet de serre induit par ces dernières sur l'atmosphère terrestre.
+
+Il y a donc un rapport de `r round(100*ratio_observation, 2)`% entre la fonte théorique et la fonte observée. Et si la compagnie Humble se vantait de pouvoir théoriquement faire fondre 7 millions de tonnes de glacier chaque jour en 1962, elle en faisait en réalité et très concrètement déjà fondre `r round(ratio_observation, 2)` $\times$ 7 = `r round(7*ratio_observation, 2)` millions chaque jour.
+
+De plus, si l'on reprend les `r format(fonte_calc_exxon_jour/1e6, scientific = F, digits = 2)` millions de tonnes théoriququ'Exxon fait aujourd'hui fondre de manière quotidienne, on obtient `r round(fonte_calc_exxon_jour/1e6*ratio_observation, 2)` millions de tonnes de glaces fondues par jour. Imaginez: le glacier d'Aletsch, plus grand glacier alpin,  est estimé à `r mass_aletsch` milliards de tonnes. Son équivalent en glace dans le monde disparaît, en `r round(mass_aletsch/365/fonte_calc_exxon_jour/ratio_observation*1e9, 1)` petites années de production.
+
+_____
+
+À un tel rythme, la grotte de glace d'Arolla n'avait donc aucune chance...
+
+```{r grotte, fig.cap="Grotte de glace d'Arolla: mars 2022 - septembre 2022", fig.align="center", out.width='100%', cache=F, eval=T}
+library(jpeg)
+library(raster)
+
+jpeg_before <- readJPEG('arolla_before.jpeg')
+
+rst_blue_before <- raster(jpeg_before[, , 1])
+rst_green_before <- raster(jpeg_before[, , 2])
+rst_red_before <- raster(jpeg_before[, , 3])
+
+arolla_before <- brick(rst_red_before, rst_green_before, rst_blue_before)
+
+jpeg_after <- readJPEG('arolla_after.jpeg')
+
+rst_blue_after <- raster(jpeg_after[, , 1])
+rst_green_after <- raster(jpeg_after[, , 2])
+rst_red_after <- raster(jpeg_after[, , 3])
+
+arolla_after <- brick(rst_red_after, rst_green_after, rst_blue_after)
+
+slideview::slideView(arolla_before, arolla_after)
+```
+
+<div>
+  <video width="100%" controls>
+    <source src="arolla.mp4" type="video/mp4">
+  </video>
+  <p class="caption">Souvenir ému de mars 2022</p>
+</div>

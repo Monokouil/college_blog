@@ -24,7 +24,7 @@ jobs:
       run: |
         sed -i "s|ghp_ipeseit|${GHP_IPESEIT}|g" ./resources/scripts/github-members.js
         sed -i "s|sender_password_value|${EMAIL_PWD}|g" ./resources/scripts/deploy.py
-        docker run -v ${{ github.workspace }}:/app -w /app -u root jcfdsilva/quarto_full:latest -c ./resources/scripts/deploy.sh
+        docker run -v ${{ github.workspace }}:/app -w /app -u root jcfdsilva/quarto_full:latest /bin/bash -c "./resources/scripts/deploy.sh"
 
     - name: Deploy
       run: |

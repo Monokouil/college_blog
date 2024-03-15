@@ -22,12 +22,12 @@ jobs:
 
     - name: Print Cached Directory Contents
       run: |
-        ls -al ~/.docker/
+        ls -al /usr/libexec/docker
 
     - name: Cache Docker image layers
       uses: actions/cache@v2
       with:
-        path: ~/.docker/  # Assuming Docker image layers are stored in the default location
+        path: /usr/libexec/docker  # Assuming Docker image layers are stored in the default location
         key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
 
     - name: Prepare Quarto Project

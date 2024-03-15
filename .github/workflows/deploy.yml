@@ -20,6 +20,12 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
+    - name: Cache Docker image layers
+      uses: actions/cache@v2
+      with:
+        path: ~/.docker/  # Assuming Docker image layers are stored in the default location
+        key: ${{ runner.os }}-docker-${{ hashFiles('**/Dockerfile') }}
+
     - name: Prepare Quarto Project
       run: |
         sed -i "s|ghp_ipeseit|${GHP_IPESEIT}|g" ./resources/scripts/github-members.js
@@ -35,5 +41,3 @@ jobs:
         echo "${SSH_PRIVATE_KEY}" | ssh-add -
         echo "${SSH_HOST_KEY}" > ~/.ssh/known_hosts
         rsync -hrvz --delete _site/* "${SSH_USER_HOST_LOCATION}"
-
-

@@ -1,0 +1,183 @@
+---
+title: Tutorial
+toc: true
+toc-location: left
+toc-expand: 3
+---
+
+```{=html}
+<script src="resources/scripts/github-members.js" defer></script>
+```
+
+# Créer un nouveau post
+
+Ce document présente comment publier un article de blog dans le [College blog](https://github.com/IPESE/college_blog).
+
+Nos articles de blog sont écrits en Quarto, un format similaire à Markdown. Cela signifie que vous pouvez facilement mettre en forme vos articles en utilisant une syntaxe simple.
+
+Une fonctionnalité intéressante de notre plateforme de blog est la possibilité d'inclure des morceaux de code R ou Python directement dans vos articles. Cela vous permet de présenter des analyses de données, des visualisations ou tout autre contenu lié au code de manière transparente dans vos articles.
+
+## Configuration de l'environnement de développement
+
+Pour pouvoir apporter des modifications à notre blog, vous devez [créer un compte GitHub](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home) et nous donner votre nom d'utilisateur ici :
+
+::: input-username
+:::
+
+Vous devriez maintenant avoir une invitation ouverte sur votre compte email. Acceptez-la et vous aurez alors le droit d'éditer le projet.
+
+Vous pouvez maintenant éditer vos posts directement sur le [GitHub IDE](https://github.com/IPESE/college_blog/new/main/posts) où vous devez être connecté à GitHub. Ajoutez simplement un nom unique à votre fichier et l'extension `.qmd` et commencez à écrire.
+
+(Et mauvaise nouvelle : ChatGPT n'est pas le meilleur outil pour demander du code markdown à copier/coller. *Mais vous pouvez toujours l'utiliser pour vous aider à comprendre la syntaxe*).
+
+Avec cette configuration, vous pouvez commencer à écrire vos articles de blog immédiatement. Il n'est pas nécessaire de passer du temps à [configurer des logiciels ou des outils](environment_installation.html).
+
+Gardez à l'esprit qu'en utilisant l'IDE Github, vous ne pourrez pas prévisualiser vos articles avant de les déployer. Cependant, nous gérerons le déploiement et la gestion des erreurs automatiquement.
+
+Pour du markdown simple (sans code python ou R par exemple), vous pouvez le tester avec des outils en ligne comme [Dillinger.io](https://dillinger.io/).
+
+## Avant d'écrire
+
+Au début de votre document, vous devriez ajouter quelques paramètres pour la façon dont votre article sera affiché.
+
+Vous pouvez modifier le titre, l'auteur, la date, les catégories et la description qui sont explicites. Pour votre information, d'autres options sont toc qui vous permet de contrôler si et comment la table des matières est affichée ou comments pour choisir le framework qui gérera les commentaires dans votre article.
+
+Voici un exemple de configuration que vous pouvez copier et adapter pour démarrer votre article :
+
+```{markdown, eval=F, echo=T}
+---
+title: Title of your blog
+author: Your name
+date: 2012-12-12
+categories:
+  - Your Category
+description: Description of your post that will appear in the listing
+comments:
+  hypothesis: true
+toc: true
+toc-location: left
+toc-expand: 3
+image : ../resources/images/sample.jpeg
+---
+```
+Vous pouvez également modifier l'image qui apparaît sur la liste.
+
+Pour cela, remplacez "../resources/images/sample.png" par une url d'une image *(urls se terminant par .jpg ou .png par exemple)*.
+
+## Ecrire en Markdown
+
+Vous pouvez ajouter des titres en commençant la ligne par \# comme ceci :
+
+```{markdown, eval=F, echo=T}       
+# Main title
+## Secondary title
+### Tertiary title
+```
+
+Vous pouvez ensuite ajouter plusieurs types de données comme :
+
+1.  Text
+
+2.  [Link to a website](https://www.google.com)
+    ```{markdown, eval=F, echo=T}
+        [Link to a website](https://www.google.com)
+    ```
+
+4.  **Bold text**
+    ```{markdown, eval=F, echo=T}
+        **bold**
+    ```
+
+5.  *Italic text*
+    ```{markdown, eval=F, echo=T}
+        *italic*
+    ```
+
+6.  ***Bold and italic text***
+    ```{markdown, eval=F, echo=T}
+        ***bold italic***
+    ```
+
+7.  Unordered list *managed with `-` and tabs *:
+
+    ```{markdown, eval=F, echo=T}
+        -   Main point
+            -   secondary point
+    ```
+
+    -   Main point
+        -   secondary point
+
+8.  Ordered list *managed with `1.`, `a.` or `i.` and tabs *:
+
+    ```{markdown, eval=F, echo=T}
+        1.  Main point
+            i.  secondary point
+            i.  secondary point
+        1. Second point
+            a.  secondary point
+            a.  secondary point
+    ```
+
+    1.  Main point
+        i.  secondary point
+        i.  secondary point
+    1. Second point
+        a.  secondary point
+        a.  secondary point
+
+9.  Tables are also possible:
+
+    ```{markdown, eval=F, echo=T}
+    | Aligned to the left | Centered col | Align to right |
+    |:--------------------|:------------:|---------------:|
+    | Content             |   Content    |        Content |
+    | Content             |   Content    |        Content |
+    ```
+
+    | Aligned to the left | Centered col | Align to right |
+    |:--------------------|:------------:|---------------:|
+    | Content             |   Content    |        Content |
+    | Content             |   Content    |        Content |
+
+## Qu'en est-il des morceaux de code ?
+
+Vous pouvez également exécuter ou afficher des morceaux de code comme ceci :
+
+```{r, echo=T, eval=F}
+    ```{r}
+    #| echo: false
+    #| output: false
+    if(!require('reticulate'))
+        install.packages("reticulate")
+    ```
+```
+Dans cet exemple, nous exécutons un code qui installera un nouveau paquetage dans R.
+
+Les options disponibles pour personnaliser la sortie sont les suivantes :
+
+| Option      | Description                                                                                                                                                                                 |
+|:-----------------|:-----------------------------------------------------|
+| **eval**    | Évaluer le morceau de code (si faux, le code est simplement répercuté dans la sortie).                                                                                                                  |
+| **echo**    | Inclure le code source dans la sortie                                                                                                                                        |
+| **output**  | Inclure les résultats de l'exécution du code dans la sortie (true, false, ou asis pour indiquer que la sortie est de la démarque brute et ne devrait pas avoir de démarque standard de Quarto). |
+| **warning** |  Inclure les avertissements dans la sortie.                                                                                                                                                             |
+| **error**   | Inclure les erreurs dans la sortie (notez que cela implique que les erreurs d'exécution du code n'arrêteront pas le traitement du document).                                                                 |
+| **include** | Catch all pour empêcher toute sortie (code ou résultats) d'être incluse (par exemple, include : false supprime toute sortie du bloc de code).                                                 |
+
+Vous pouvez voir un exemple plus complet sur l'utilisation de r et du code python [ici](https://ipese-web.epfl.ch/college-blog/posts/test.html)
+
+## Déployer les modifications
+
+1. Cliquez sur "Commit changes"
+2. Vous pouvez alors modifier le message ou laisser le message par défaut
+3. Laissez l'option "Livrer directement à la branche principale".
+4. Cliquez sur "Valider les modifications"
+5. Nous avons mis en place un processus qui permet d'ignorer les posts où une erreur est rencontrée. Dans le menu github, vous pouvez cliquer sur "Actions" pour vérifier l'état du déploiement créé par votre post.
+6. Notre service informatique examinera tous les posts contenant une erreur, la corrigera et expliquera ce qui a été fait pour la corriger dans une section au bas de celui-ci.
+
+
+## Modifier un post
+1. Pour éditer votre post, allez sur la [page github](https://github.com/IPESE/college_blog/tree/main/posts) des posts du projet et cliquez sur le post que vous voulez éditer.
+2. Cliquez sur l'icône du crayon en haut à droite de la section du code.
+3. Cette fenêtre devrait maintenant vous être familière. Modifiez et déployez comme décrit précédemment !

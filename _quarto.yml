@@ -7,6 +7,7 @@ website:
     logo: "resources/images/logo.png"
     left:
       - index.qmd
+      - tutorial_fr.qmd
       - tutorial.qmd
     right:
       - text: joao.ferreiradasilva@epfl.ch

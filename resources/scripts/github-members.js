@@ -33,8 +33,10 @@ confirmButton.addEventListener("click", function() {
             throw new Error("Failed to add user to team.");
         }
         console.log("User added to team successfully.");
+        inputField.value=""
     })
     .catch(error => {
         console.error(error.message);
+        inputField.style.borderColor="red"
     });
 });

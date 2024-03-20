@@ -16,6 +16,10 @@ always_allow_html: yes
 bibliography : arolla.bib
 ---
 
+```{=html}
+<script src="../../resources/scripts/actionButtons.js"></script>
+```
+
 ```{r setup, include=F}
 if(!require('knitr'))
   install.packages("knitr", dependencies = T, repos='http://cran.us.r-project.org')

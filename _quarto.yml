@@ -10,6 +10,8 @@ website:
       - tutorial.qmd
     right:
       - text: joao.ferreiradasilva@epfl.ch
+        href: mailto:joao.ferreiradasilva@epfl.ch
+        target: _blank
 format:
   html:
     theme: cosmo

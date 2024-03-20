@@ -8,6 +8,8 @@ website:
     left:
       - index.qmd
       - tutorial.qmd
+    right:
+      - text: joao.ferreiradasilva@epfl.ch
 format:
   html:
     theme: cosmo
